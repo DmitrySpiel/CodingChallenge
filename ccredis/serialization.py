@@ -1,6 +1,6 @@
 import re
 
-def define_input(input):
+def deserialize(input):
     in_split = input.split('\r\n')
     print(in_split)
     analyse = in_split[0]
@@ -23,8 +23,8 @@ def define_input(input):
     elif re.match(r'\*\d*', analyse):
         print("Array detected in " + input)
         result = get_array_parse(input)
-    print("Result: ")
-    print(result)
+    return(result)
+
 
 def get_simple_string(input):
     return input[1:]
@@ -61,4 +61,4 @@ if __name__ == "__main__":
         arr = [line.rstrip() for line in file]
     #arr = ["$-1\r\n",'*1\r\n$4\r\nping\r\n','*2\r\n$4\r\necho\r\n$11\r\nhello world\r\n', '*2\r\n$3\r\nget\r\n$3\r\nkey\r\n',"+OK\r\n","-Error message\r\n","$0\r\n\r\n",'+hello world\r\n']
     for i in range(len(arr)):
-        define_input(arr[i])
+        deserialize(arr[i])
