@@ -11,6 +11,12 @@ struct Node
 	char ch;
 	int freq;
 	Node *left, *right;
+    char getCh(){
+        return ch;
+    }
+    char getFreq(){
+        return freq;
+    }
 };
 
 std::string toLowerCase(const std::string& str) {
@@ -87,7 +93,7 @@ void decode(Node* root, int &index, string str)
 }
 
 // Builds Huffman Tree and decode given input text
-void buildHuffmanTree(string text)
+void buildHuffmanTree(string text, string fileName)
 {
 	// count frequency of appearance of each character
 	// and store it in a map
@@ -125,6 +131,9 @@ void buildHuffmanTree(string text)
 	// root stores pointer to root of Huffman Tree
 	Node* root = pq.top();
 
+    char rootCh = root->getCh();
+    int rootFreq = root->getFreq();
+
 	// traverse the Huffman Tree and store Huffman Codes
 	// in a map. Also prints them
 	unordered_map<char, string> huffmanCode;
@@ -143,7 +152,7 @@ void buildHuffmanTree(string text)
 		str += huffmanCode[ch];
 	}
 
-	cout << "\nEncoded string is :\n" << str << '\n';
+	writeEncoded(str, fileName)
 
 	// traverse the Huffman Tree again and this time
 	// decode the encoded string
@@ -154,12 +163,30 @@ void buildHuffmanTree(string text)
 	}
 }
 
+void writeEncoded(std::string str, std::string fileName) {
+    ofstream myfile;
+    
+    myfile.open (fileName);
+
+    if (!myfile.is_open()) {
+        std::cerr << "Error: Unable to open file " << fileName << std::endl;
+        return 1; // Return error code
+    }
+
+    myfile << str;
+    myfile.close();
+    return 0;
+}
+
 // Huffman coding algorithm
 int main(int argc, char* argv[])
 {   
     string fileName;
+    string outFile;
     std::cout << "Enter file name: \n";
     std::cin >> fileName;
+    std::cout << "Enter out file name: \n";
+    std::cin >> outFile;
 
     // Open file
     std::ifstream my_file;
@@ -179,7 +206,7 @@ int main(int argc, char* argv[])
     // Close file
     my_file.close();
 
-	buildHuffmanTree(toLowerCase(content));
+	buildHuffmanTree(toLowerCase(content), outFile);
 
 	return 0;
 }
