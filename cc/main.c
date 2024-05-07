@@ -103,6 +103,26 @@ const char* openfile(char* fileName) {
     return string;
 }
 
+int binary(int n) {
+    int i = 0;
+    int binaryNum[32];
+    int result = 0;
+
+    // Convert decimal to binary
+    while (n > 0) {
+        binaryNum[i] = n % 2;
+        n = n / 2;
+        i++;
+    }
+
+    // Calculate binary number from array
+    for (int j = i - 1; j >= 0; j--) {
+        result = result * 10 + binaryNum[j];
+    }
+
+    return result;
+}
+
 int main() {
     char fileName[60];
     printf("Enter file name: \n");
@@ -120,11 +140,8 @@ int main() {
 
     printf("Character frequencies (sorted):\n");
     for (int i = 0; i < numChars; i++) {
-        printf("%c: %d\n", charFreqArray[i].character, charFreqArray[i].frequency);
-        
+        printf("%c: %d: %d\n", charFreqArray[i].character, charFreqArray[i].frequency, binary(i));
     }
-
-
 
     // Free dynamically allocated memory
     free(charFreqArray);
